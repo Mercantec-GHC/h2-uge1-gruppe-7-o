@@ -1,6 +1,7 @@
 // import { useEffect } from "react";
 import { useGameActions, useGameStore } from "../stores/gameStore";
 import { cn } from "../utils/cn";
+import { motion, stagger } from "motion/react";
 
 const AnswerOptions = () => {
   const currentCountry = useGameStore((state) => state.currentCountry);
@@ -9,10 +10,34 @@ const AnswerOptions = () => {
   const userGuess = useGameStore((state) => state.userGuess);
   const { setUserGuess } = useGameActions();
 
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        delayChildren: stagger(0.05),
+      },
+    },
+  };
+
+  const item = {
+    hidden: { opacity: 0, y: 10 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        stiffness: 500, // Lower = softer spring (try 50-150)
+        damping: 30, // Higher = less bouncy (try 15-30)
+        duration: 0.01, // You can omit this for spring, but can keep for opacity
+      },
+    },
+  };
+
   return (
-    <div className="flex flex-col gap-2">
+    <motion.div className="flex flex-col gap-2">
       {currentCountry?.answerOptions.map((option) => (
-        <div
+        <motion.div
           key={option}
           onClick={() => {
             gameStatus === "playing" && setUserGuess(option);
@@ -32,10 +57,19 @@ const AnswerOptions = () => {
               "bg-green-400 hover:bg-green-400 font-bold",
           )}
         >
-          <p>{option}</p>
-        </div>
+          <motion.div
+            variants={container}
+            initial="hidden"
+            animate="show"
+            key={option}
+          >
+            <motion.p variants={item} key={option}>
+              {option}
+            </motion.p>
+          </motion.div>
+        </motion.div>
       ))}
-    </div>
+    </motion.div>
   );
 };
 
