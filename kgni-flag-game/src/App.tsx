@@ -1,25 +1,35 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import fetchCountries from "./api/fetchCountries";
+import { useGameActions, useGameStore } from "./stores/gameStore";
+import Menu from "./screens/Menu";
+import FlagGuesser from "./screens/FlagGuesser";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const gameStatus = useGameStore((state) => state.status);
+  const currentScreen = useGameStore((state) => state.currentScreen);
+  const { setCountries, setCurrentCountry } = useGameActions();
 
+  const [isFetching, setIsFetching] = useState(true);
   useEffect(() => {
     fetchCountries().then((data) => {
-      console.log(data);
+      setCountries(data);
+      setCurrentCountry();
+
+      // setTimeout(() => {
+      //   setIsFetching(false);
+      // }, 1000);
+      setIsFetching(false);
     });
   }, []);
   return (
     <>
-      <div className="w-screen min-h-screen flex flex-col items-center justify-center overflow-x-hidden">
-        <h1 className="text-4xl font-bold">FLAG GUESSER</h1>
-        <div>
-          <button onClick={() => setCount((count) => count + 1)}>
-            count is {count}
-          </button>
+      {/* {isFetching && <div>Loading...</div>} */}
+      {!isFetching && (
+        <div className="w-screen min-h-screen flex flex-col items-center justify-center overflow-x-hidden">
+          {currentScreen === "menu" ? <Menu /> : <FlagGuesser />}
         </div>
-      </div>
+      )}
     </>
   );
 }

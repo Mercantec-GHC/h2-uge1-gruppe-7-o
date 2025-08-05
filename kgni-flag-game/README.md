@@ -78,7 +78,7 @@ Utility-first CSS framework for rapidly building custom designs.
 
 #### CVA (class-variance-authority)
 
-CSS-in-TS libraries such as Stitches and Vanilla Extract are fantastic options for building type-safe UI components; taking away all the worries of class names and StyleSheet composition.
+Package that gives us an easy to use API to define variants of our components, by conditionally applying classes.
 
 #### Tailwind Merge
 
@@ -87,3 +87,29 @@ Utility function to efficiently merge Tailwind CSS classes in JS without style c
 #### clsx
 
 Used for conditionally applying classes.
+
+### Global game state management
+
+We haven chosen Zustand for its simplicity, performance, and scalability, making it an excellent fit for our game’s global state management.
+
+#### Why We Use Zustand Instead of Context + useReducer
+
+Simpler Code and Less Boilerplate
+
+- Zustand allows us to define our global game state and actions in a single, easy-to-read store file.
+- There’s no need to create multiple context providers or reducers, which keeps our codebase clean and maintainable.
+
+**Better Performance**
+
+- Zustand uses a subscription model, so only the components that actually use a piece of state will re-render when that state changes.
+- With the Context API, any state update causes all consuming components to re-render, which can hurt performance.
+
+**Easier State Updates**
+
+- Zustand lets us update state directly with simple functions, similar to setState, but with global scope.
+- With Context + useReducer, we have to dispatch actions and manage reducers, which can be more complex for larger or more dynamic state.
+
+**Scalable and Flexible**
+
+- Zustand is great for both small and large apps, and can easily handle more complex game logic if needed in the future.
+- It supports features like persistence, middleware, and selective subscriptions out of the box.
