@@ -1,11 +1,4 @@
 // types.ts
-export interface GameState {
-  countries: Country[];
-  status: "menu" | "playing" | "lost" | "won";
-  currentCountry: Country | null;
-  score: number;
-}
-
 export interface CountryAPIData {
   name: {
     common: string;
@@ -21,7 +14,6 @@ export interface CountryAPIData {
     png: string;
     svg: string;
   };
-  capital: string[];
 }
 
 export interface Country extends CountryAPIData {
