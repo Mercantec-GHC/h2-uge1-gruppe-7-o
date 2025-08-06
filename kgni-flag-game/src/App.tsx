@@ -6,7 +6,6 @@ import Menu from "./screens/Menu";
 import FlagGuesser from "./screens/FlagGuesser";
 
 function App() {
-  const gameStatus = useGameStore((state) => state.status);
   const currentScreen = useGameStore((state) => state.currentScreen);
   const { setCountries, setCurrentCountry } = useGameActions();
 
