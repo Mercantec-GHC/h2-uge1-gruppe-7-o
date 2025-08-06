@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { fetchAllCountries } from '../api/services/countriesApi';
+import { useEffect, useState } from "react";
+import { fetchAllCountries } from "../api/services/countriesApi";
 
 export default function FlagQuiz() {
   const [countries, setCountries] = useState([]);
@@ -21,7 +21,9 @@ export default function FlagQuiz() {
       .sort(() => Math.random() - 0.5)
       .slice(0, 3);
 
-    const allChoices = [...wrongCountries, correctCountry].sort(() => Math.random() - 0.5);
+    const allChoices = [...wrongCountries, correctCountry].sort(
+      () => Math.random() - 0.5,
+    );
 
     setQuestion(correctCountry);
     setChoices(allChoices);
@@ -30,9 +32,11 @@ export default function FlagQuiz() {
 
   function checkAnswer(selectedName) {
     if (selectedName === question.name.common) {
-      setAnswerResult('✅ Rigtigt! 🎉');
+      setAnswerResult("✅ Rigtigt! 🎉");
     } else {
-      setAnswerResult(`❌ Forkert! Det rigtige svar var: ${question.name.common}`);
+      setAnswerResult(
+        `❌ Forkert! Det rigtige svar var: ${question.name.common}`,
+      );
     }
   }
 
@@ -42,7 +46,9 @@ export default function FlagQuiz() {
 
   return (
     <div className="max-w-xl mx-auto p-6 bg-white shadow-md rounded mt-10">
-      <h2 className="text-xl font-bold mb-4 text-center">Hvilket land har dette flag?</h2>
+      <h2 className="text-xl font-bold mb-4 text-center">
+        Hvilket land har dette flag?
+      </h2>
 
       <div className="flex justify-center mb-6">
         <img
