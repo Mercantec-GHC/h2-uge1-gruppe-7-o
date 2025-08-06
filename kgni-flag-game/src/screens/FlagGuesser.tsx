@@ -4,6 +4,7 @@ import AnswerOptions from "../components/AnswerOptions";
 import { useGameActions, useGameStore } from "../stores/gameStore";
 import coinSound from "../assets/sounds/8bit-coin.mp3";
 import airhornSound from "../assets/sounds/airhorn.mp3";
+import wrongSound from "../assets/sounds/wrong.mp3";
 import WinningModal from "../components/WinningModal";
 import Score from "../components/Score";
 import PlusAnimation from "../components/PlusAnimation";
@@ -22,6 +23,12 @@ const FlagGuesser = () => {
     return coin;
   }, []);
 
+  const wrong = useMemo(() => {
+    const wrong = new Audio(wrongSound);
+    wrong.volume = 0.5;
+    return wrong;
+  }, []);
+
   const airhorn = useMemo(() => {
     const airhorn = new Audio(airhornSound);
     airhorn.volume = 0.22;
@@ -30,13 +37,15 @@ const FlagGuesser = () => {
 
   useEffect(() => {
     let timeoutId: number;
+    if (gameStatus === "lost") {
+      wrong.play();
+    }
+
     if (gameStatus === "won") {
       airhorn.play();
     }
     if (correctGuess) {
-      // if (!soundMuted) {
       coin.play();
-      // }
       if (gameStatus !== "won") {
         timeoutId = setTimeout(() => {
           setCurrentCountry();
@@ -44,7 +53,7 @@ const FlagGuesser = () => {
       }
     }
     return () => clearTimeout(timeoutId);
-  }, [correctGuess, coin, setCurrentCountry, gameStatus, airhorn]);
+  }, [correctGuess, coin, setCurrentCountry, gameStatus, airhorn, wrong]);
 
   return (
     <>
