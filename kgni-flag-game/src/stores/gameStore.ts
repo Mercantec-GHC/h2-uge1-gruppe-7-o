@@ -1,9 +1,9 @@
 import { create } from "zustand";
+import type { Country } from "../types/types";
 
 type GameState = {
   countries: Country[] | null;
   status: GameStatus;
-  currentScreen: CurrentScreen;
   currentCountry: Country | null;
   userGuess: string | null;
   correctGuess: boolean | null;
@@ -12,7 +12,6 @@ type GameState = {
 };
 
 type GameStatus = "playing" | "paused" | "lost" | "won" | null;
-type CurrentScreen = "menu" | "flag";
 
 type Actions = {
   actions: {
@@ -23,7 +22,6 @@ type Actions = {
     incrementScore: () => void;
     setScore: (score: number) => void;
     reset: () => void;
-    setCurrentScreen: (screen: CurrentScreen) => void;
   };
 };
 
@@ -42,8 +40,7 @@ export const useGameStore = create<GameState & Actions>((set, get, store) => ({
   currentCountry: null,
   userGuess: null,
   soundMuted: true,
-  status: null,
-  currentScreen: "menu",
+  status: "playing",
   score: 0,
   correctGuess: null,
   actions: {
@@ -93,7 +90,6 @@ export const useGameStore = create<GameState & Actions>((set, get, store) => ({
     incrementScore: () => {
       set((state) => ({ score: state.score + 1 }));
     },
-    setCurrentScreen: (screen: CurrentScreen) => set({ currentScreen: screen }),
     reset: () =>
       set((state) => {
         // Save the countries value
@@ -113,32 +109,9 @@ export const useGameStore = create<GameState & Actions>((set, get, store) => ({
           countries,
           currentCountry,
           status: "playing",
-          currentScreen: state.currentScreen,
         };
       }),
   },
 }));
 
 export const useGameActions = () => useGameStore((state) => state.actions);
-
-export interface CountryAPIData {
-  name: {
-    common: string;
-    official: string;
-    nativeName: {
-      ron: {
-        common: string;
-        official: string;
-      };
-    };
-  };
-  flags: {
-    png: string;
-    svg: string;
-  };
-}
-
-export interface Country extends CountryAPIData {
-  isGuessed: boolean;
-  answerOptions: string[];
-}
