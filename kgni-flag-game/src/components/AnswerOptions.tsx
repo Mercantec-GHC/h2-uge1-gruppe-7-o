@@ -42,10 +42,11 @@ const AnswerOptions = () => {
           onClick={() => {
             gameStatus === "playing" && setUserGuess(option);
           }}
+          // refactor this, maybe put into component with variants
           className={cn(
-            "p-2 border-[1px] border-gray-300 hover:bg-gray-200 cursor-pointer rounded-md duration-100 shadow-sm select-none",
+            "p-2 border-[1px] border-gray-100 hover:bg-gray-200 bg-white cursor-pointer rounded-md duration-100 shadow-sm select-none",
             gameStatus === "lost" &&
-              "opacity-30 bg-gray-100 cursor-default hover:bg-disabled",
+              "opacity-30 bg-gray-300 cursor-default hover:bg-disabled",
             gameStatus === "lost" &&
               currentCountry?.name.common === option &&
               "bg-green-400 hover:bg-green-400 opacity-50 font-bold",

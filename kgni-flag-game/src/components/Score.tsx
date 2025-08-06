@@ -6,16 +6,9 @@ const Score = () => {
   const countries = useGameStore((state) => state.countries);
   return (
     <>
-      <p className="text-right text-xs">
-        <NumberFlow value={score} /> / {countries?.length}
+      <p className="text-right text-sm font-bold mb-4">
+        <NumberFlow className="text-xl" value={score} /> / {countries?.length}
       </p>
-      <div className="flex justify-end">
-        <progress
-          className="text-right"
-          value={score}
-          max={countries?.length}
-        />
-      </div>
     </>
   );
 };
