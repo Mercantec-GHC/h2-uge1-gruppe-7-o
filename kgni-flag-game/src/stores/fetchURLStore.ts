@@ -1,8 +1,8 @@
 import { create } from "zustand";
 
 export const FETCH_URLS = {
-  200: "https://restcountries.com/v3.1/all?fields=name,flags,capital",
-  400: "https://restcountries.com/v3.1//all?fields=name,flags,capital",
+  200: "https://restcountries.com/v3.1/all?fields=name,flags",
+  400: "https://restcountries.com/v3.1//all?fields=name,flags",
   500: "https://statuscodes.free.beeceptor.com/500",
 } as const;
 
