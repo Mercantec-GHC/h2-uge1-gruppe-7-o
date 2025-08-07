@@ -10,6 +10,7 @@ const AnswerOptions = () => {
   const userGuess = useGameStore((state) => state.userGuess);
   const { setUserGuess } = useGameActions();
 
+  // the container and item variables are used for staggering animations
   const container = {
     hidden: { opacity: 0 },
     show: {
@@ -27,9 +28,9 @@ const AnswerOptions = () => {
       y: 0,
       transition: {
         type: "spring",
-        stiffness: 500, // Lower = softer spring (try 50-150)
-        damping: 30, // Higher = less bouncy (try 15-30)
-        duration: 0.01, // You can omit this for spring, but can keep for opacity
+        stiffness: 500,
+        damping: 30,
+        duration: 0.01,
       },
     },
   };
@@ -40,7 +41,9 @@ const AnswerOptions = () => {
         <motion.div
           key={option}
           onClick={() => {
-            gameStatus === "playing" && setUserGuess(option);
+            if (gameStatus === "playing") {
+              setUserGuess(option);
+            }
           }}
           // refactor this, maybe put into component with variants
           className={cn(

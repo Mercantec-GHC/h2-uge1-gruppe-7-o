@@ -45,6 +45,7 @@ export const useGameStore = create<GameState & Actions>((set, get, store) => ({
   correctGuess: null,
   actions: {
     setCountries: (countries: Country[]) => set({ countries }),
+    // This function is used to set the country to be guessed, it is called on load, and then on each right answer (to load the next one)
     setCurrentCountry: () =>
       set((state) => {
         return {
@@ -53,15 +54,18 @@ export const useGameStore = create<GameState & Actions>((set, get, store) => ({
           currentCountry: getRandomNotGuessedCountry(state.countries),
         };
       }),
+    // This function is what is
     setUserGuess: (userGuess: string | null) =>
       set((state) => {
-        if (userGuess !== state.currentCountry?.name.common) {
+        const correctGuess = userGuess === state.currentCountry?.name.common;
+        if (!correctGuess) {
           return {
             correctGuess: false,
             status: "lost",
-            userGuess: userGuess, // reset
+            userGuess: null,
           };
         } else {
+          // If guess is correct, set the country as guessed
           const countries = state.countries?.map((country) => {
             if (country.name.common === userGuess) {
               return {
@@ -74,13 +78,14 @@ export const useGameStore = create<GameState & Actions>((set, get, store) => ({
 
           const newScore = state.score + 1;
 
+          // If all countries are guessed, the game is won
           const status = countries?.length === newScore ? "won" : "playing";
+
           return {
             correctGuess: true,
             score: newScore,
             countries: countries,
             status: status,
-            // currentCountry: getRandomNotGuessedCountry(countries),
             userGuess: userGuess, // reset
           };
         }
@@ -92,7 +97,7 @@ export const useGameStore = create<GameState & Actions>((set, get, store) => ({
     },
     reset: () =>
       set((state) => {
-        // Save the countries value
+        // Set all countries in memory as not guessed
         const countries = state.countries?.map((country) => {
           return {
             ...country,
@@ -101,9 +106,10 @@ export const useGameStore = create<GameState & Actions>((set, get, store) => ({
         });
 
         const currentCountry = getRandomNotGuessedCountry(countries);
-        // Get the initial state
+        // Get the initial state for the store
         const initialState = store.getInitialState();
-        // Return the initial state, but override countries
+
+        // Return the initial state, but override countries, currentCountry and status
         return {
           ...initialState,
           countries,

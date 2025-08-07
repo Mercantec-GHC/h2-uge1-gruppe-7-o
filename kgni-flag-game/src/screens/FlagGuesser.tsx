@@ -17,6 +17,7 @@ const FlagGuesser = () => {
   const { setCurrentCountry } = useGameActions();
   const correctGuess = useGameStore((state) => state.correctGuess);
 
+  //TODO: all these useMemo hooks can be turned into a useSound hook
   const coin = useMemo(() => {
     const coin = new Audio(coinSound);
     coin.volume = 0.02;
@@ -78,9 +79,10 @@ const FlagGuesser = () => {
         <Flag />
         <AnswerOptions />
         <GameButton />
-        <p className="absolute bottom-4 right-1/2 translate-x-1/2 text-gray-200">
-          {currentCountry?.name.common}
-        </p>
+        {/* Used for testing purposes: Uncomment to show the current country  */}
+        {/* <p className="absolute bottom-4 right-1/2 translate-x-1/2 text-gray-200"> */}
+        {/*   {currentCountry?.name.common} */}
+        {/* </p> */}
       </div>
     </>
   );

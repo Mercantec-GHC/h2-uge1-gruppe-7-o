@@ -3,11 +3,14 @@ import { retry } from "./retry";
 import APIError from "./APIError";
 import { useFetchUrlStore } from "../stores/fetchURLStore";
 
+export default function fetchCountriesWithRetry() {
+  return retry(_fetchCountries, 3, 1000); // 3 attempts, 1s delay
+}
+
 async function _fetchCountries(): Promise<Country[]> {
   const url = useFetchUrlStore.getState().url;
   const response = await fetch(url);
 
-  // Usage:
   if (!response.ok) {
     const message =
       response.status >= 500 && response.status < 600
@@ -23,7 +26,7 @@ async function _fetchCountries(): Promise<Country[]> {
     answerOptions: getRandomOptions(data, country.name.common, 4),
   }));
 
-  return randomSortResults(extendedData).slice(0, 3);
+  return randomSortResults(extendedData);
 }
 
 function randomSortResults<T>(results: T[]): T[] {
@@ -50,8 +53,4 @@ function getRandomOptions(
 
   // Add correct answer and shuffle again
   return randomSortResults([...shuffled, correct]);
-}
-
-export default function fetchCountriesWithRetry() {
-  return retry(_fetchCountries, 3, 1000); // 3 attempts, 1s delay
 }

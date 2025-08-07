@@ -1,8 +1,9 @@
 import { Button } from "../components/Button";
 import { useGameActions, useGameStore } from "../stores/gameStore";
 
+//TODO: Implement this screen.It is not yet implemented, since we only have a single game mode, no settings and no difficulty levels
 const Menu = () => {
-  const { setStatus, setCurrentScreen } = useGameActions();
+  const { setStatus } = useGameActions();
   const fetchingError = useGameStore((state) => state.fetchingError);
 
   return (
@@ -17,20 +18,12 @@ const Menu = () => {
         <Button
           className="min-w-40"
           onClick={() => {
-            if (fetchingError) {
-              // refetch in here
-            }
             setStatus("playing");
-            setCurrentScreen("flag");
+            // setCurrentScreen("flag");
           }}
         >
           {fetchingError ? "Retry" : "Start Game"}
         </Button>
-        {/* {gameStatus !== "lost" && ( */}
-        {/*   <Button fullWidth onClick={() => reset()}> */}
-        {/*     Reset */}
-        {/*   </Button> */}
-        {/* )} */}
       </div>
     </>
   );

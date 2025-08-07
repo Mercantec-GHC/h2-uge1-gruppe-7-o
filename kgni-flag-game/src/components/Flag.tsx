@@ -10,7 +10,7 @@ const Flag = () => {
   const currentCountry = useGameStore((state) => state.currentCountry);
   const gameStatus = useGameStore((state) => state.status);
 
-  // creating keys like this is probably not the best way (hacky solution that works for now)
+  //TODO: creating keys like this is probably not the best way (hacky solution that works for now)
   const shakeKey = gameStatus === "lost" ? Date.now() : "no-shake";
   const overlayKey = gameStatus === "lost" ? Date.now() + 1 : "no-overlay";
 
