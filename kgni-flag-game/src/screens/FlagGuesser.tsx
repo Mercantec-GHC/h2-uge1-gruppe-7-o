@@ -25,13 +25,13 @@ const FlagGuesser = () => {
 
   const wrong = useMemo(() => {
     const wrong = new Audio(wrongSound);
-    wrong.volume = 0.5;
+    wrong.volume = 0.2;
     return wrong;
   }, []);
 
   const airhorn = useMemo(() => {
     const airhorn = new Audio(airhornSound);
-    airhorn.volume = 0.22;
+    airhorn.volume = 0.1;
     return airhorn;
   }, []);
 
