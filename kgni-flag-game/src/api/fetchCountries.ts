@@ -6,13 +6,14 @@ import { useFetchUrlStore } from "../stores/fetchURLStore";
 async function _fetchCountries(): Promise<Country[]> {
   const url = useFetchUrlStore.getState().url;
   const response = await fetch(url);
+
   // Usage:
   if (!response.ok) {
-    const msg =
+    const message =
       response.status >= 500 && response.status < 600
         ? "Something went wrong, please try again later."
         : "Couldn't fetch countries. Please check your connection or try again.";
-    throw new APIError(msg, response.status);
+    throw new APIError({ message, status: response.status });
   }
   const data = await response.json();
 
