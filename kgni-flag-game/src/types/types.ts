@@ -1,4 +1,3 @@
-// types.ts
 export interface CountryAPIData {
   name: {
     common: string;
