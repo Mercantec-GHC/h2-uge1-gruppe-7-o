@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchAllCountries } from "../api/services/countriesApi"; // Funktion der henter alle lande fra API
+import { fetchCountries } from "../api/services/countriesApi"; // Funktion der henter alle lande fra API
 
 // Hovedkomponenten til flag-quizzen
 export default function FlagQuiz() {
@@ -25,7 +25,7 @@ export default function FlagQuiz() {
   useEffect(() => {
 
     // Hent alle lande fra backend/API
-    fetchAllCountries().then((data) => {
+    fetchCountries(['name', 'flags', 'cca3']).then((data) => {
       setCountries(data); // Gemmer landene i state
       generateQuestion(data);  // Kalder funktionen til at oprette første spørgsmål
     });
@@ -85,7 +85,7 @@ export default function FlagQuiz() {
           Score: {score} / {totalQuestions}
         </p>
       </div>
-      
+
       <h2 className="text-xl font-bold mb-4 text-center">
         Hvilket land har dette flag?
       </h2>

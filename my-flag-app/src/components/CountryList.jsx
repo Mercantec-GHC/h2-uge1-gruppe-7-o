@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getAllCountries } from '../api/services/countriesApi';
+import { fetchCountries } from '../api/services/countriesApi';
 
 // Komponent der viser en liste over lande
 export default function CountryList() {
@@ -14,7 +14,7 @@ export default function CountryList() {
   useEffect(() => {
 
     // Kalder funktionen der henter lande fra backend
-    getAllCountries()
+    fetchCountries(['name', 'region', 'cca3'])
       .then((data) => setCountries(data)) // Gemmer de hentede lande i state
       .catch((err) => setError(err.message));// Hvis der opstår en fejl, gem den
   }, []);
