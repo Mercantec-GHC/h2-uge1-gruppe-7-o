@@ -50,7 +50,7 @@ function App() {
         {!isFetching && !fetchingError && <FlagGuesser />}
         <div
           onClick={() => setShowSetUrlButton((prev) => !prev)}
-          className="absolute right-4 bottom-4 size-6 rounded-md cursor-pointer bg-black"
+          className="absolute right-4 bottom-4 size-6 rounded-md cursor-pointer bg-transparent hover:bg-black duration-100"
         ></div>
         {showSetUrlButton && (
           <div className="flex absolute bottom-20 gap-4 flex-col items-center">
@@ -86,15 +86,6 @@ function App() {
                 500
               </Button>
             </div>
-            {/* <Button */}
-            {/*   fullWidth */}
-            {/*   className="bg-blue-400" */}
-            {/*   onClick={() => { */}
-            {/*     setRefetch((prev) => prev + 1); */}
-            {/*   }} */}
-            {/* > */}
-            {/*   Refetch */}
-            {/* </Button> */}
           </div>
         )}
       </div>
