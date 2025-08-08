@@ -38,19 +38,20 @@ function randomSortResults<T>(results: T[]): T[] {
   return array;
 }
 
+//TODO: This can be refectored to improve performance, instead of creating a new large array with all other options
 function getRandomOptions(
   countries: CountryAPIData[],
-  correct: string,
+  correctCountryName: string,
   count = 4,
 ) {
   // Get all country names except the correct one
   const otherNames = countries
     .map((c) => c.name.common)
-    .filter((name) => name !== correct);
+    .filter((name) => name !== correctCountryName);
 
   // Shuffle and and get 3
   const shuffled = randomSortResults(otherNames).slice(0, count - 1);
 
   // Add correct answer and shuffle again, this extra shuffle is probably a bit redundant, since we only have 3 options by default.
-  return randomSortResults([...shuffled, correct]);
+  return randomSortResults([...shuffled, correctCountryName]);
 }
