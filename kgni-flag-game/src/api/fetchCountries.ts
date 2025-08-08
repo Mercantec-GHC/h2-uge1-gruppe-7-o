@@ -48,9 +48,9 @@ function getRandomOptions(
     .map((c) => c.name.common)
     .filter((name) => name !== correct);
 
-  // Shuffle and  3
+  // Shuffle and and get 3
   const shuffled = randomSortResults(otherNames).slice(0, count - 1);
 
-  // Add correct answer and shuffle again
+  // Add correct answer and shuffle again, this extra shuffle is probably a bit redundant, since we only have 3 options by default.
   return randomSortResults([...shuffled, correct]);
 }
