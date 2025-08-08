@@ -38,7 +38,7 @@ function randomSortResults<T>(results: T[]): T[] {
   return array;
 }
 
-//TODO: This can be refectored to improve performance, instead of creating a new large array with all other options
+//TODO: This can be refectored to improve performance, we do not need to create a new large array with all other options
 function getRandomOptions(
   countries: CountryAPIData[],
   correctCountryName: string,
